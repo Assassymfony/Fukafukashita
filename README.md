@@ -32,7 +32,7 @@ Ici vous pouvez partager vos mirages nocturnes avec le monde entier, ainsi que v
 </a>
 
 <a href = "https://codefirst.iut.uca.fr/git/aurian.jault">
-<img src="https://codefirst.iut.uca.fr/git/avatars/d774f04d13eab2fbcdfcbfccb966108f?size=870" width="50" >
+<img src="https://codefirst.iut.uca.fr/git/avatars/e617cf1cc0d6e769f4dc33604f04525b?size=870" width="50" >
 </a>
 
 <a href = "https://codefirst.iut.uca.fr/git/remi.arnal">
