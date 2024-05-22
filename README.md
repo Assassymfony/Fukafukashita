@@ -34,11 +34,11 @@
 </a>
 
 <a href = "https://codefirst.iut.uca.fr/git/remi.arnal">
-<img src="https://codefirst.iut.uca.fr/git/avatars/4372364870f18ab9104f13222fa84d2e?size=870" width="50" >
+<img src="https://codefirst.iut.uca.fr/git/avatars/c13b7679488b8dcdf7d551b52f579bcd?size=870" width="50" >
 </a>
 
 <a href = "https://codefirst.iut.uca.fr/git/dorian.hodin">
-<img src="https://codefirst.iut.uca.fr/git/avatars/4372364870f18ab9104f13222fa84d2e?size=870" width="50" >
+<img src="https://codefirst.iut.uca.fr/git/avatars/d6f97dbdf66352b0b66685e144aa1ee5?size=870" width="50" >
 </a>
 
 </div>
