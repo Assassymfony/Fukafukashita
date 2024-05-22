@@ -30,7 +30,7 @@
 </a>
 
 <a href = "https://codefirst.iut.uca.fr/git/aurian.jault">
-<img src="https://codefirst.iut.uca.fr/git/avatars/4372364870f18ab9104f13222fa84d2e?size=870" width="50" >
+<img src="https://codefirst.iut.uca.fr/git/avatars/d774f04d13eab2fbcdfcbfccb966108f?size=870" width="50" >
 </a>
 
 <a href = "https://codefirst.iut.uca.fr/git/remi.arnal">
