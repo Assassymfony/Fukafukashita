@@ -10,7 +10,9 @@
 
 # Présentation
 
+Vous avez fait un rêve étrange ou amusant et vous voulez le partager avec vos amis ? L'appli web Fukafukashita est l'endroit idéal pour vous ! 
 
+Ici vous pouvez partager vos mirages nocturnes avec le monde entier, et aussi voir les rêves des autres et les commenter, pour partager un petit moment de rigolade dans ce quotidien morose et sans aucun espoir :-)
 
 
 # Développeurs 🧑‍💻
