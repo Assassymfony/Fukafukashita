@@ -40,7 +40,7 @@ Ici vous pouvez partager vos mirages nocturnes avec le monde entier, ainsi que v
 </a>
 
 <a href = "https://codefirst.iut.uca.fr/git/dorian.hodin">
-<img src="https://codefirst.iut.uca.fr/git/avatars/d6f97dbdf66352b0b66685e144aa1ee5?size=870" width="50" >
+<img src="https://codefirst.iut.uca.fr/git/avatars/1987ef0b5b65f4d208cb3250a24b4794?size=870" width="50" >
 </a>
 
 </div>
