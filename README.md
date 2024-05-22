@@ -16,14 +16,28 @@
 # Développeurs 🧑‍💻
 
 - Corentin RICHARD : corentin.richard@etu.uca.fr
+- Rémi ARNAL : remi.arnal@etu.uca.fr
+- Aurian JAULT : aurian.jault@etu.uca.fr
+- Dorian HODIN : dorian.hodin@etu.uca.fr
+
 
 
 <div align="center">
 <a href = "https://codefirst.iut.uca.fr/git/corentin.richard">
-<a href = "https://codefirst.iut.uca.fr/git/aurian.jault">
-<a href = "https://codefirst.iut.uca.fr/git/remi.arnal">
-<a href = "https://codefirst.iut.uca.fr/git/dorian.hodin">
 
+
+<img src="https://codefirst.iut.uca.fr/git/avatars/4372364870f18ab9104f13222fa84d2e?size=870" width="50" >
+</a>
+
+<a href = "https://codefirst.iut.uca.fr/git/aurian.jault">
+<img src="https://codefirst.iut.uca.fr/git/avatars/4372364870f18ab9104f13222fa84d2e?size=870" width="50" >
+</a>
+
+<a href = "https://codefirst.iut.uca.fr/git/remi.arnal">
+<img src="https://codefirst.iut.uca.fr/git/avatars/4372364870f18ab9104f13222fa84d2e?size=870" width="50" >
+</a>
+
+<a href = "https://codefirst.iut.uca.fr/git/dorian.hodin">
 <img src="https://codefirst.iut.uca.fr/git/avatars/4372364870f18ab9104f13222fa84d2e?size=870" width="50" >
 </a>
 
