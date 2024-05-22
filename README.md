@@ -4,7 +4,7 @@
 
 # **Fukafukashita** 
 ### Vos rêves valent le coup d'être écouté
-![Symfony](https://img.shields.io/badge/symfony-5.3-green))
+![Symfony](https://img.shields.io/badge/symfony-5.3-green)
 </div>
 
 
