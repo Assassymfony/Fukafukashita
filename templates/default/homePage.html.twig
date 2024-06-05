@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Fukafukashita{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    {% block stylesheets %}
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #e0f7fa;
+                color: #00796b;
+                margin: 0;
+                padding: 0;
+            }
+            .header {
+                background-color: #3a3c6e;
+                color: white;
+                padding: 10px 20px;
+                display: flex;
+                align-items: center;
+            }
+            .header img {
+                height: 50px;
+                margin-right: 20px;
+            }
+            .container {
+                width: 80%;
+                margin: 20px auto;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+            .post {
+                margin-bottom: 20px;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+            .post:last-child {
+                border-bottom: none;
+            }
+            .post-title {
+                font-size: 1.5em;
+                margin-bottom: 10px;
+                color: #01579b;
+            }
+            .post-body {
+                font-size: 1em;
+                color: #004d40;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <div class="header">
+        <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/jigglypuff.gif" alt="Jigglypuff">
+        <h1>Dream Forum</h1>
+    </div>
+    <div class="container">
+        {% for post in posts %}
+            <div class="post">
+                <div class="post-title">{{ post.title }}</div>
+                <div class="post-body">{{ post.body }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+</body>
+</html>
