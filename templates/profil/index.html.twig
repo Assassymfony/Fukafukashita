@@ -1,0 +1,11 @@
+{# templates/profil/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil - {{ profil.name }}{% endblock %}
+
+{% block body %}
+    <h1>Profil: {{ profil.name }}</h1>
+    <p>ID: {{ profil.id }}</p>
+    <p>Description: {{ profil.description }}</p>
+{% endblock %}
