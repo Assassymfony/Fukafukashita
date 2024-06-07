@@ -5,5 +5,11 @@ controllers:
     type: attribute
 
 home:
-    path: /home
+    path: /
     controller: App\Controller\HomePageController::home
+
+
+user:
+    path: /user
+    controller: App\Controller\UserController::profile
+

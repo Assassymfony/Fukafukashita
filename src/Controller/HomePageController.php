@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\HomePageEntity;
+use App\Entity\Posts;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,8 +24,8 @@ class HomePageController extends AbstractController
     public function home(): Response
     {
         $posts = [
-            new HomePageEntity('Rêve 1', 'J\'ai rếvé que Corentin était beau (impossible)'),
-            new HomePageEntity('Rêve 2', 'J\'ai rếvé que Rémi est moche (impossible)'),
+            new Posts('1','DH',false, 1, 100, 'Rêve 1', 'Je vais vivre', ["nul","boring"]),
+            new Posts('2','DH',true, 500, 100, 'Rêve 2', 'Je vais me pendre', ["enfin","merci"]),
         ];
         return $this->render('default/homePage.html.twig', [
             'posts' => $posts,

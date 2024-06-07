@@ -18,6 +18,7 @@
                 color: white;
                 padding: 10px 20px;
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
             }
             .header img {
@@ -32,14 +33,26 @@
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                 padding: 20px;
             }
+
             .post {
                 margin-bottom: 20px;
                 padding: 10px;
                 border-bottom: 1px solid #ddd;
+                border-left: 5px solid transparent;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
             }
-            .post:last-child {
-                border-bottom: none;
+
+            .post-user {
+                align-self: flex-end;
             }
+
+            .post.dream {
+                background-color: #706975;
+                color: white;
+            }
+
             .post-title {
                 font-size: 1.5em;
                 margin-bottom: 10px;
@@ -47,24 +60,68 @@
             }
             .post-body {
                 font-size: 1em;
-                color: #004d40;
+                color: #1a1b42;
             }
+
+            .vote {
+                display: flex;
+                align-items: center;
+                margin-top: 10px;
+                font-size: 0.8em;
+                color: black;
+            }
+
+            .vote span {
+                margin-right: 5px;
+                color: black;
+            }
+
+            .vote .upvote, .vote .downvote {
+                cursor: pointer;
+                color: black;
+            }
+            .login-button {
+                background-color: #3a3c6e;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
         </style>
     {% endblock %}
 </head>
+<header class="header">
+    <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/jigglypuff.gif" alt="Jigglypuff">
+    <h1>Dream Forum</h1>
+    <button class="login-button">Se connecter</button>
+</header>
 <body>
 {% block body %}
-    <div class="header">
-        <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/jigglypuff.gif" alt="Jigglypuff">
-        <h1>Dream Forum</h1>
-    </div>
     <div class="container">
         {% for post in posts %}
-            <div class="post">
-                <div class="post-title">{{ post.title }}</div>
-                <div class="post-body">{{ post.body }}</div>
+            <div class="post{% if not post.isDream %} dream{% endif %}">
+                <div class="post-title">{{ post.getTitle() }}</div>
+                <div class="post-user">Posté par : {{ post.getIdUser() }}</div>
+                <div class="post-body">{{ post.getBody() }}</div>
+                {% if post.getTags() is not empty %}
+                    <div class="tags">
+                        {% for tag in post.getTags() %}
+                            <span>#{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="vote">
+                    <span class="upvote">&#9650;</span>
+                    <span>{{ post.getUpVote() }}</span>
+                    <span class="downvote">&#9660;</span>
+                    <span>{{ post.getDownVote() }}</span>
+                </div>
             </div>
         {% endfor %}
+
+
     </div>
 {% endblock %}
 </body>
