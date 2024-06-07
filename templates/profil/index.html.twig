@@ -4,8 +4,34 @@
 
 {% block title %}Profil - {{ profil.name }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>Profil: {{ profil.name }}</h1>
-    <p>ID: {{ profil.id }}</p>
-    <p>Description: {{ profil.description }}</p>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="{{ asset('images/userFiller.png') }}" alt="Profile Image" class="profile-image">
+            <div class="profile-info">
+                <h1>{{ profil.name }}</h1>
+                <p>ID: {{ profil.id }}</p>
+                <p>Description: {{ profil.description }}</p>
+            </div>
+        </div>
+        <button class="follow-button" onclick="openPopup()">Follow</button>
+    </div>
+
+    <!-- Pop-up Modal -->
+    <div id="followPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <p>Are you sure you want to follow {{ profil.name }}?</p>
+            <a href="{{ path('profile_follow', {id: profil.id}) }}" class="follow-button">Yes</a>
+            <button class="follow-button" onclick="closePopup()">No</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('scripts/scripts.js') }}"></script>
 {% endblock %}

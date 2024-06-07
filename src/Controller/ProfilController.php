@@ -10,25 +10,42 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProfilController extends AbstractController
 {
+    private Profil $curentUser;
 
-    public function __construct(private EntityManager $mgr) {}
+    public function __construct(private EntityManager $mgr)
+    {
+    }
 
-    #[Route('/profil/{id}',requirements: ['page' => '\d+'])]
-    public function profil(int $id): Response    
-    {   
-        $profil = $this->mgr->find(Profil::class,$id);
+    #[Route('/profil/{id}', requirements: ['page' => '\d+'])]
+    public function profil(int $id): Response
+    {
+        $profil = $this->mgr->find(Profil::class, $id);
         return $this->render('profil/index.html.twig', [
             'profil' => $profil
         ]);
     }
 
-    #[Route('/profil/{id}/follow',requirements: ['page' => '\d+'])]
-    public function followProfil(int $id): Response    
-    {   
+    #[Route('/profil/{id}/follow', requirements: ['page' => '\d+'])]
+    public function followProfil(int $id): Response
+    {
+        $profil = $this->mgr->find(Profil::class, $id);
+        if ($profil instanceof Profil) {
+            $this->curentUser->addFollowing($profil);
+            return $this->render('profil/index.html.twig', [
+            ]);
+        } else {
+            return $this->render('error.html.twig', []);
+        }
         // $profil = $this->mgr->find(Profil::class,$id);
-        return $this->render('profil/index.html.twig', [
-            // 'profil' => $profil
-        ]);
+        // 'profil' => $profil
+    }
+
+    #[Route('/profil/new', name: 'profil_new')]
+    public function new(): Response
+    {
+        $profil = new Profil();
+
+        return $this->redirectToRoute('profil_show', ['id' => $profil->getId()]);
     }
 
 
