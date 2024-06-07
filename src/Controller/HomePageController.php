@@ -31,4 +31,9 @@ class HomePageController extends AbstractController
             'posts' => $posts,
         ]);
     }
+
+    public function addPost(): Response
+    {
+        return $this->render('default/addPostPage.html.twig');
+    }
 }

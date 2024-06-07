@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Post{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un Post</h1>
+    <form action="" method="post">
+        <div>
+            <label for="title">Titre:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div>
+            <label for="tags">Tags:</label>
+            <input type="text" id="tags" name="tags" placeholder="Séparez les tags par des virgules">
+        </div>
+        <button type="submit">Ajouter</button>
+    </form>
+{% endblock %}
+
+

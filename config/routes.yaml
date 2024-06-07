@@ -12,3 +12,7 @@ home:
 user:
     path: /user
     controller: App\Controller\ProfilePageController::user
+
+addPost:
+    path: /addPost
+    controller: App\Controller\HomePageController::addPost
