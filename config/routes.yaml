@@ -11,5 +11,4 @@ home:
 
 user:
     path: /user
-    controller: App\Controller\UserController::profile
-
+    controller: App\Controller\ProfilePageController::user

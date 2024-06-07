@@ -5,14 +5,8 @@
 {% block body %}
     <h1>User Profile</h1>
     <div>
-        <strong>Nom:</strong> {{ user.username }}
+        <h3><strong>Utilisateur :</strong> {{ user.idUser }}</h3>
+        <h5>Description : {{ user.description }}</h5>
     </div>
-    <div>
-        <strong>Profile Picture:</strong>
-        {% if user.profilePicture %}
-            <img src="" alt="{{ user.username }}">
-        {% else %}
-            <p>No profile picture uploaded.</p>
-        {% endif %}
-    </div>
+
 {% endblock %}

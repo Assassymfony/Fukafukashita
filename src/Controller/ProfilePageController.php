@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Posts;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class HomePageController extends AbstractController
+class ProfilePageController extends AbstractController
 {
+
     private EntityManagerInterface $entityManager;
 
     private ManagerRegistry $registry;
@@ -19,16 +20,13 @@ class HomePageController extends AbstractController
         $this->registry = $registry;
     }
     /**
-     * @Route("/", name="home", methods = {"GET"})
+     * @Route("/user", name="user", methods = {"GET"})
      */
-    public function home(): Response
+    public function user(): Response
     {
-        $posts = [
-            new Posts('1','DH',false, 1, 100, 'Rêve 1', 'Je vais vivre', ["nul","boring"]),
-            new Posts('2','DH',true, 500, 100, 'Rêve 2', 'Je vais me pendre', ["enfin","merci"]),
-        ];
-        return $this->render('default/homePage.html.twig', [
-            'posts' => $posts,
+        $user = new User('DH','493', 'pp de fou','J\'aime pas vivre');
+        return $this->render('default/profile.html.twig', [
+            'user' => $user,
         ]);
     }
 }
