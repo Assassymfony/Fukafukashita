@@ -20,8 +20,10 @@ class ProfilController extends AbstractController
     public function profil(int $id): Response
     {
         $profil = $this->mgr->find(Profil::class, $id);
+        $posts = $profil->getPosts();
         return $this->render('profil/index.html.twig', [
-            'profil' => $profil
+            'profil' => $profil,
+            'posts' => $posts
         ]);
     }
 
@@ -30,7 +32,7 @@ class ProfilController extends AbstractController
     {
         $profil = $this->mgr->find(Profil::class, $id);
         if ($profil instanceof Profil) {
-            $this->curentUser->addFollowing($profil);
+            $profil->addFollower($this->curentUser);
             return $this->render('profil/index.html.twig', [
             ]);
         } else {

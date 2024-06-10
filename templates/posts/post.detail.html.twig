@@ -1,0 +1,70 @@
+{# templates/post/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Post - {{ post.title }}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .post-container {
+            
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+        }
+        .profile-name {
+            font-size: 1.5em;
+        }
+        .post-title {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+        .post-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .votes {
+            margin-bottom: 20px;
+        }
+        .tags {
+            margin-bottom: 20px;
+        }
+        .commentary {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .commentary-author {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="post-container" style="background-color: {{ post.isDream ? '#bda3b6' : '#1a2c4c' }}">
+        <h3 class="profile-name">{{ post.profil.name }}</h3>
+        <h2 class="post-title">{{ post.title }}</h2>
+        <p class="post-text">{{ post.text }}</p>
+        <div class="votes">
+            <span>Up Votes: {{ post.upVote }}</span> / <span>Down Votes: {{ post.downVote }}</span>
+        </div>
+        <div class="tags">
+            <h4>Tags:</h4>
+            <ul>
+                {% for tag in post.tags %}
+                    <li>{{ tag.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="commentaries">
+            <h4>Commentaires:</h4>
+            {% for commentary in post.commentaries %}
+                <div class="commentary">
+                    <div class="commentary-author">{{ commentary.profil.name }}</div>
+                    <div class="commentary-text">{{ commentary.text }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -21,6 +21,17 @@
         <button class="follow-button" onclick="openPopup()">Follow</button>
     </div>
 
+    <div class="posts-container">
+        <h1> Posts </h1>
+        {% if  posts|length > 0 %}
+        <ul>
+            {% for post in posts %}
+                {% include 'posts/post.detail.html.twig' with {'post': post} %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+
     <!-- Pop-up Modal -->
     <div id="followPopup" class="popup">
         <div class="popup-content">
