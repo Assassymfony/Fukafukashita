@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProfilController extends AbstractController
 {
-    private Profil $curentUser;
+    private Profil $currentProfil;
 
     public function __construct(private EntityManager $mgr)
     {
@@ -32,10 +32,17 @@ class ProfilController extends AbstractController
     {
         $profil = $this->mgr->find(Profil::class, $id);
         if ($profil instanceof Profil) {
-            $profil->addFollower($this->curentUser);
+            $profil->addFollower($this->getUser());
+            $this->mgr->persist($profil);
+            $this->mgr->flush();
+            $this->addFlash('success','');
+            $posts = $profil->getPosts();
             return $this->render('profil/index.html.twig', [
+                'profil' => $profil,
+                'posts' => $posts
             ]);
         } else {
+            $this->addFlash('error','');
             return $this->render('error.html.twig', []);
         }
         // $profil = $this->mgr->find(Profil::class,$id);
