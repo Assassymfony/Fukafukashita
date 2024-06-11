@@ -7,9 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Post;
+use App\Form\Type\PostType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Serializer;
 
-class PostController {
+class PostController extends AbstractController {
 
     private EntityManagerInterface $em;
     private Serializer $serializer;
@@ -20,7 +22,7 @@ class PostController {
         $this->serializer = $serializer;
     }
     
-    #[Route('/post/{id}', name: 'display post', methods: ['GET'])]
+    #[Route('/post/{id}', name: 'display post', methods: ['POST'])]
     public function getPost(int $id): Response
     {
         $post = $this->em->getRepository(Post::class)->find($id);
@@ -33,22 +35,28 @@ class PostController {
         return new Response();
     }
 
-    #[Route('/post/', name: 'add_post', methods: ['POST'])]
+    #[Route('/post/new/', name: 'add_post', methods: ['GET','POST'])]
     public function addPost(Request $request) :Response
     {
-        $data = json_decode($request->getContent(), true);
-        
-        try {
-            $post = $this->serializer->deserialize($data, Post::class, 'json');
-        } catch (\Exception) {
-            return new Response("Invalid JSON data", Response::HTTP_BAD_REQUEST);
+        $post = new Post();
+
+        $form = $this->createForm(PostType::class, $post);
+
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form = $form->getData();
+
+            $this->em->persist($post);
+            $this->em->flush();
         }
 
+        return $this->render('post/new.html.twig', [
+            'form' => $form,
+        ]);
+     
         # Handle error on data
-        $this->em->persist($post);
-        $this->em->flush();
-                
-        return new Response();
+            
     }
 
     #[Route('/post/{id}', name: 'remove_post', methods: ['DELETE'])]
