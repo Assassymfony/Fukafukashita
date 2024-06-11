@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Post;
-use App\Entity\Profil;
 use App\Form\Type\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -32,20 +31,22 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/post/{id}',
+    #[Route(
+        '/post/{id}',
         name: 'display post',
         methods: ['GET'],
-        requirements: ['id' => '\d+'])]
+        requirements: ['id' => '\d+']
+    )]
     public function getPost(int $id): Response
     {
         $post = $this->em->getRepository(Post::class)->find($id);
 
         if (!$post) {
-            # Error 404 page
         }
 
-        # Return twig
-        return new Response();
+        return $this->render('post/post.html.twig', [
+            'post' => $post
+        ]);
     }
 
     #[Route('/post/new/', name: 'add_post', methods: ['GET', 'POST'])]
@@ -59,14 +60,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $form = $form->getData();
-
             $user = $this->getUser();
-
-            $profil = new Profil();
-            $profil->setId(11);
-            $profil->setName("coucou");
-
-
             $post->setProfil($user);
 
             $this->em->persist($post);
@@ -78,16 +72,13 @@ class PostController extends AbstractController
         return $this->render('post/new.html.twig', [
             'form' => $form,
         ]);
-
-        # Handle error on data
-
     }
 
     #[Route('/post/{id}', name: 'remove_post', methods: ['DELETE'])]
     public function removePost(int $id): Response
     {
-        $postRef = $this->em->getReference('Post', $id);
-        $this->em->remove($postRef);
+        $post = $this->em->getRepository(Post::class)->find($id);
+        $this->em->remove($post);
         $this->em->flush();
 
         return new Response();
