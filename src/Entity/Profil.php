@@ -6,14 +6,20 @@ use App\Repository\ProfilRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
-class Profil
+#[UniqueEntity(fields: ['name'], message: 'There is already an account with this name')]
+class Profil implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    private array $roles = [];
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
@@ -52,6 +58,11 @@ class Profil
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): ?int
+    {
+        return $this->id = $id;
     }
 
     public function getName(): ?string
@@ -172,5 +183,31 @@ class Profil
         $this->followers->removeElement($follower);
 
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->name;
     }
 }
