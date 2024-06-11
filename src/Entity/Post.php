@@ -24,11 +24,11 @@ class Post
     #[ORM\Column]
     private ?bool $isDream = null;
 
-    #[ORM\Column]
-    private ?int $upVote = null;
+    #[ORM\Column(options: ["default" => 0])]
+    private int $upVote = 0;
 
-    #[ORM\Column]
-    private ?int $downVote = null;
+    #[ORM\Column(options: ["default" => 0])]
+    private int $downVote = 0;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
