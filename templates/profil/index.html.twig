@@ -6,40 +6,43 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/components/profil.css') }}">
 {% endblock %}
 
 {% block body %}
     <div class="profile-container">
         <div class="profile-header">
-            <img src="{{ asset('images/userFiller.png') }}" alt="Profile Image" class="profile-image">
+            <img src="https://api.dicebear.com/8.x/big-smile/svg?seed={{ profil.name }}" alt="Profile Image" class="profile-image">
             <div class="profile-info">
                 <h1>{{ profil.name }}</h1>
-                <p>ID: {{ profil.id }}</p>
-                <p>Description: {{ profil.description }}</p>
+                <br>
+                <p>{{ profil.description }}</p>
             </div>
         </div>
-        <button class="follow-button" onclick="openPopup()">Follow</button>
+        <div class="horizontal-layout">
+        {% if selfFlag %}
+            {% if followFlag %}
+                <a href="{{ path('profil_unfollow', {id: profil.id}) }}" class="follow-button">Unfollow</a>
+            {% else %}
+                <a href="{{ path('profil_follow', {id: profil.id}) }}" class="follow-button">Follow</a>
+            {% endif %}
+        {% endif %}
+            {# <a href="{{ path('profil_follow', {id: profil.id}) }}" class="follow-button"></a> #}
+            <div class="count-container">
+                <a href="{{ path('profil_followers', {id: profil.id}) }}" class="count-button">{{ profil.followers.count() }} followers</a>
+                <a href="{{ path('profil_following', {id: profil.id}) }}" class="count-button">{{ profil.following.count() }} following</a>
+            </div>
+        </div>    
     </div>
 
     <div class="posts-container">
-        <h1> Posts </h1>
-        {% if  posts|length > 0 %}
-        <ul>
-            {% for post in posts %}
-                {% include 'posts/post.detail.html.twig' with {'post': post} %}
-            {% endfor %}
-        </ul>
-    {% endif %}
-    </div>
-
-    <!-- Pop-up Modal -->
-    <div id="followPopup" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closePopup()">&times;</span>
-            <p>Are you sure you want to follow {{ profil.name }}?</p>
-            <a href="{{ path('profile_follow', {id: profil.id}) }}" class="follow-button">Yes</a>
-            <button class="follow-button" onclick="closePopup()">No</button>
-        </div>
+        {% if posts|length > 0 %}
+            <ul>
+                {% for post in posts %}
+                    {% include 'post/post.html.twig' with {'post': post} %}
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
 {% endblock %}
 

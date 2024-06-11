@@ -1,8 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
     color: #1a2c4c;
 }
+
 
 .profile-container {
     background-color: #fff;
@@ -12,18 +13,18 @@ body {
     margin: 20px auto;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.profile-header {
-    display: flex;
+    }
+    
+    .profile-header {
+        display: flex;
     align-items: center;
     border-bottom: 1px solid #5c5d7f;
     padding-bottom: 10px;
     margin-bottom: 20px;
-}
+    }
 
-.profile-image {
-    border-radius: 50%;
+    .profile-image {
+        border-radius: 50%;
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -32,17 +33,22 @@ body {
 
 .profile-info {
     flex-grow: 1;
-}
-
-.profile-info h1 {
-    font-size: 24px;
+    }
+    
+    .profile-info h1 {
+        font-size: 24px;
     margin: 0;
     color: #1a2c4c;
-}
-
+    }
+    
 .profile-info p {
     margin: 5px 0;
     color: #38476b;
+}
+
+.horizontal-layout {
+    display: flex;
+    align-items: center;
 }
 
 .follow-button {
@@ -54,6 +60,30 @@ body {
     cursor: pointer;
     text-align: center;
     text-decoration: none;
+    margin: 4px;
+}
+
+.count-container {
+    display: flex;
+    margin-left: auto; /* Pushes the container to the right */
+}
+
+.count-button {
+    background-color: #38476b;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    margin: 4px;
+}
+
+
+
+.count-button:hover{
+    background-color: #5c5d7f;
 }
 
 .follow-button:hover {
@@ -102,3 +132,20 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+html {
+    --s: 257px;
+    /* control the size */
+    --c1: #38476b;
+    --c2: #bda3b6;
+  
+    --_c: var(--c1) calc(100% - var(--s)/2) 99%, #0000;
+    --_g: var(--s), #0000 calc(99% - var(--s)/2), var(--_c);
+    background:
+      radial-gradient(var(--s) at 100% var(--_g)),
+      radial-gradient(calc(var(--s)/4) at 50% calc(100%/3), var(--_c)) var(--s) 0,
+      radial-gradient(var(--s) at 0% var(--_g)) 0 calc(3*var(--s)) var(--c2);
+    background-size:
+      calc(2*var(--s)) calc(9*var(--s)/4),
+      calc(2*var(--s)) calc(3*var(--s)/4);
+  }
