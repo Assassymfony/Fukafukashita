@@ -9,7 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Tags>
  */
-class TagsRepository extends ServiceEntityRepository
+class agsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
