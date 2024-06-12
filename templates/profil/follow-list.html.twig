@@ -1,0 +1,55 @@
+{# templates/profil/list.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Profils{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/components/profil.css') }}">
+    <style>
+        .profile-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .profile-card {
+            width: calc(100% / 5);
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            border: 1px solid #ddd;
+            margin: 5px;
+        }
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .profile-card a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+        .profile-card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <h1> {{title }} : </h1>
+    <div class="profile-list">
+        {% for profil in profils %}
+            <div class="profile-card">
+                <img src="https://api.dicebear.com/8.x/big-smile/svg?seed={{ profil.name }}" alt="Profile Image">
+                <a href="{{ path('profil_show', {id: profil.id}) }}">{{ profil.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('scripts/scripts.js') }}"></script>
+{% endblock %}

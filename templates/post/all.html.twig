@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="{{ asset('css/components/post_mini.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/post_all.css') }}">
+
+
+<div id="wrapper">
+  <h1>All posts</h1>
+  
+  {% for post in posts %}
+    {% include 'post/post_mini.html.twig' with {'post' : post} %}
+  {% endfor %}
+</div>

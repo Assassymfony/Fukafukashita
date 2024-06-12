@@ -1,0 +1,34 @@
+:root {
+  font-family: "Helvetica", 'Courier New', Courier, monospace;
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2em auto;
+  width: 70%;
+
+  >h1 {
+    color: white;
+    font-size: 3em;
+    margin-top: 0;
+  }
+}
+
+html {
+  --s: 257px;
+  /* control the size */
+  --c1: #38476b;
+  --c2: #bda3b6;
+
+  --_c: var(--c1) calc(100% - var(--s)/2) 99%, #0000;
+  --_g: var(--s), #0000 calc(99% - var(--s)/2), var(--_c);
+  background:
+    radial-gradient(var(--s) at 100% var(--_g)),
+    radial-gradient(calc(var(--s)/4) at 50% calc(100%/3), var(--_c)) var(--s) 0,
+    radial-gradient(var(--s) at 0% var(--_g)) 0 calc(3*var(--s)) var(--c2);
+  background-size:
+    calc(2*var(--s)) calc(9*var(--s)/4),
+    calc(2*var(--s)) calc(3*var(--s)/4);
+}

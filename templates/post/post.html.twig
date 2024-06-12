@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="{{ asset('css/components/post.css') }}">
+
+<title>{{ post.title }}</title>
+
+{% block body %}
+<div id="post-wrapper">
+  <div id="post">
+    <div id="post-info">
+      <img src="https://api.dicebear.com/8.x/big-smile/svg?seed={{ post.profil.name }}" width="50px">
+      <span>{{ post.profil.name }}</span>
+      {# <span>- {{ post.dateCreated }}</span> #}
+      <span>- Il y a 3 jours</span>
+    </div>
+
+    <h1 id="post-title">{{ post.title }}</h1>
+    <p>{{ post.text }}</p>
+  </div>
+
+  <hr>
+
+  <div id="comments">
+    <h2>Comments</h2>
+  </div>
+</div>
+{% endblock %}

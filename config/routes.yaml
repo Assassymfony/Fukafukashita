@@ -3,16 +3,6 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-
-home:
-    path: /
-    controller: App\Controller\HomePageController::home
-
-
-user:
-    path: /user
-    controller: App\Controller\ProfilePageController::user
-
-addPost:
-    path: /addPost
-    controller: App\Controller\HomePageController::addPost
+profile_follow:
+    path: /profil/{id}/follow
+    controller: App\Controller\ProfileController::follow
