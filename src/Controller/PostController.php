@@ -33,7 +33,7 @@ class PostController extends AbstractController
 
     #[Route(
         '/post/{id}',
-        name: 'display post',
+        name: 'display_post',
         methods: ['GET'],
         requirements: ['id' => '\d+']
     )]
@@ -66,7 +66,7 @@ class PostController extends AbstractController
             $this->em->persist($post);
             $this->em->flush();
 
-            return new Response($user->getUserIdentifier());
+            return $this->redirectToRoute('display_post', ['id' => $post->getId()]);
         }
 
         return $this->render('post/new.html.twig', [

@@ -1,3 +1,4 @@
+<a href="{{ path('display_post', {'id': post.id}) }}">
 <div id="post-wrapper">
   <div id="post">
     <div id="post-info">
@@ -11,3 +12,4 @@
     <p>{{ post.text|u.truncate(150, true, '...') }}</p>
   </div>
 </div>
+</a>

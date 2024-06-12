@@ -7,6 +7,8 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -24,9 +26,6 @@ class Post
 
     #[ORM\Column]
     private ?bool $isDream = null;
-
-    // #[ORM\Column()]
-    // private ?DateTime $dateCreated = null;
 
     #[ORM\Column(options: ["default" => 0])]
     private int $upVote = 0;
@@ -93,18 +92,6 @@ class Post
     public function setDream(bool $isDream): static
     {
         $this->isDream = $isDream;
-
-        return $this;
-    }
-
-    public function getDateCreated(): ?DateTime
-    {
-        return $this->dateCreated;
-    }
-
-    public function setDateCreated(?DateTime $dateCreated): static
-    {
-        $this->dateCreated = $dateCreated;
 
         return $this;
     }
@@ -197,5 +184,15 @@ class Post
         $this->tags->removeElement($tag);
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('title', new Assert\Length([
+            'min' => 10,
+            'max' => 200,
+            'minMessage' => 'Your title must be at least {{ limit }} characters long',
+            'maxMessage' => 'Your title cannot be longer than {{ limit }} characters',
+        ]));
     }
 }
