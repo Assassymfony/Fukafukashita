@@ -61,6 +61,11 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
+    public function setId(int $id): ?int
+    {
+        return $this->id = $id;
+    }
+
     public function getName(): ?string
     {
         return $this->name;

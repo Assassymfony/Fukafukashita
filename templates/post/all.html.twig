@@ -1,0 +1,9 @@
+<h1>All website posts</h1>
+
+{% for post in posts %}
+  <div>
+    <span>Id: {{ post.id }}</span>
+    <span>Title: {{ post.title }}</span>
+    <span>Content: {{ post.text }}</span>
+  </div>
+{% endfor %}
