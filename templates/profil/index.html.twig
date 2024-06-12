@@ -17,10 +17,14 @@
                 <h1>{{ profil.name }}</h1>
                 <br>
                 <p>{{ profil.description }}</p>
+                
             </div>
         </div>
         <div class="horizontal-layout">
+            
         {% if selfFlag %}
+            <a href="{{ path('profil_edit', {id: profil.id}) }}" class="follow-button">Edit</a>
+        {% elseif connected %}
             {% if followFlag %}
                 <a href="{{ path('profil_unfollow', {id: profil.id}) }}" class="follow-button">Unfollow</a>
             {% else %}
