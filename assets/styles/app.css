@@ -63,6 +63,17 @@ body {
     margin: 4px;
 }
 
+.delete-button {
+    background-color: #970c2a;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    margin: 4px;
+}
 .count-container {
     display: flex;
     margin-left: auto; /* Pushes the container to the right */

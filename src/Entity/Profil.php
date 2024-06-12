@@ -188,11 +188,6 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUserIdentifier(): string
-    {
-        return $this->name;
-    }
-
     public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.

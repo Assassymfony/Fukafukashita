@@ -13,12 +13,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProfilController extends AbstractController
 {
-    private Profil $currentProfil;
+    
 
     public function __construct(private EntityManager $mgr)
     {
     }
-
+    #[Route(path:"/profil", name:"profil_perso", methods: ["GET"])]
+    public function baseProfil(): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+        return $this->redirectToRoute('profil_show', ['id' => $this->getUser()->getId()]);
+    }
     #[Route('/profil/{id}',name:'profil_show', requirements: ['page' => '\d+'])]
     public function profil(int $id): Response
     {
