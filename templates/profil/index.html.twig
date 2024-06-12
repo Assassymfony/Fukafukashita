@@ -1,20 +1,55 @@
+{# templates/profil/show.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfilController!{% endblock %}
+{% block title %}Profil - {{ profil.name }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/components/profil.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="https://api.dicebear.com/8.x/big-smile/svg?seed={{ profil.name }}" alt="Profile Image" class="profile-image">
+            <div class="profile-info">
+                <h1>{{ profil.name }}</h1>
+                <br>
+                <p>{{ profil.description }}</p>
+                
+            </div>
+        </div>
+        <div class="horizontal-layout">
+            
+        {% if selfFlag %}
+            <a href="{{ path('profil_edit', {id: profil.id}) }}" class="follow-button">Edit</a>
+        {% elseif connected %}
+            {% if followFlag %}
+                <a href="{{ path('profil_unfollow', {id: profil.id}) }}" class="follow-button">Unfollow</a>
+            {% else %}
+                <a href="{{ path('profil_follow', {id: profil.id}) }}" class="follow-button">Follow</a>
+            {% endif %}
+        {% endif %}
+            {# <a href="{{ path('profil_follow', {id: profil.id}) }}" class="follow-button"></a> #}
+            <div class="count-container">
+                <a href="{{ path('profil_followers', {id: profil.id}) }}" class="count-button">{{ profil.followers.count() }} followers</a>
+                <a href="{{ path('profil_following', {id: profil.id}) }}" class="count-button">{{ profil.following.count() }} following</a>
+            </div>
+        </div>    
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="posts-container">
+        {% if posts|length > 0 %}
+            <ul>
+                {% for post in posts %}
+                    {% include 'post/post_mini.html.twig' with {'post': post} %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/aurian/3eme_annee/assassymfony/fukafukashita/src/Controller/ProfilController.php</code></li>
-        <li>Your template at <code>/home/aurian/3eme_annee/assassymfony/fukafukashita/templates/profil/index.html.twig</code></li>
-    </ul>
-</div>
+{% block javascripts %}
+    <script src="{{ asset('scripts/scripts.js') }}"></script>
 {% endblock %}

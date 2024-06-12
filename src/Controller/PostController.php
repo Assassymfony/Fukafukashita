@@ -55,12 +55,12 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
 
         $post = new Post();
-
         $form = $this->createForm(PostType::class, $post);
-
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //$dateNow = new DateTime();
+            
             $form = $form->getData();
             $user = $this->getUser();
             $post->setProfil($user);
