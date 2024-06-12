@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +24,9 @@ class Post
 
     #[ORM\Column]
     private ?bool $isDream = null;
+
+    // #[ORM\Column()]
+    // private ?DateTime $dateCreated = null;
 
     #[ORM\Column(options: ["default" => 0])]
     private int $upVote = 0;
@@ -89,6 +93,18 @@ class Post
     public function setDream(bool $isDream): static
     {
         $this->isDream = $isDream;
+
+        return $this;
+    }
+
+    public function getDateCreated(): ?DateTime
+    {
+        return $this->dateCreated;
+    }
+
+    public function setDateCreated(?DateTime $dateCreated): static
+    {
+        $this->dateCreated = $dateCreated;
 
         return $this;
     }
