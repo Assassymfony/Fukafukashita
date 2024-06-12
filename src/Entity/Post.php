@@ -25,9 +25,6 @@ class Post
     #[ORM\Column]
     private ?bool $isDream = null;
 
-    // #[ORM\Column()]
-    // private ?DateTime $dateCreated = null;
-
     #[ORM\Column(options: ["default" => 0])]
     private int $upVote = 0;
 
@@ -50,10 +47,14 @@ class Post
     #[ORM\ManyToMany(targetEntity: Tags::class, inversedBy: 'posts')]
     private Collection $tags;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
         $this->commentaries = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -97,17 +98,6 @@ class Post
         return $this;
     }
 
-    public function getDateCreated(): ?DateTime
-    {
-        return $this->dateCreated;
-    }
-
-    public function setDateCreated(?DateTime $dateCreated): static
-    {
-        $this->dateCreated = $dateCreated;
-
-        return $this;
-    }
 
     public function getUpVote(): ?int
     {
@@ -195,6 +185,18 @@ class Post
     public function removeTag(Tags $tag): static
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
