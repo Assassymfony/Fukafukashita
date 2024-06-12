@@ -43,7 +43,7 @@
         {% if posts|length > 0 %}
             <ul>
                 {% for post in posts %}
-                    {% include 'post/post.html.twig' with {'post': post} %}
+                    {% include 'post/post_mini.html.twig' with {'post': post} %}
                 {% endfor %}
             </ul>
         {% endif %}
