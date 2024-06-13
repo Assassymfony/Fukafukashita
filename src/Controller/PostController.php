@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Post;
 use App\Form\Type\PostType;
 use App\Form\Type\CommentType;
+use App\Form\Type\SimpleSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
@@ -28,7 +29,7 @@ class PostController extends AbstractController
         $posts = $this->em->getRepository(Post::class)->findAll();
 
         return $this->render('post/all.html.twig', [
-            "posts" => $posts,
+            "posts" => array_reverse($posts),
             "title" => "Derniers Posts"
         ]);
     }
@@ -132,4 +133,27 @@ class PostController extends AbstractController
             'form' => $form,
         ]);
     }
+    
+    #[Route('/post/search', name: 'search_post', methods: ['GET', 'POST'])]
+    public function searchPost(Request $request): Response
+    {
+        $form = $this->createForm(SimpleSearchType::class);
+
+        $form->handleRequest($request);        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchString = $form->get('search')->getData();
+            $posts = $this->em->getRepository(Post::class)->searchByTitleOrText($searchString);
+
+            return $this->render('post/search.html.twig', [
+                'posts' => $posts,
+                'form' => $this->createForm(SimpleSearchType::class)
+            ]);
+
+            // return new Response(print_r($posts, true));
+        }
+
+        return $this->render('post/search.html.twig', [
+                'form' => $form
+        ]);
+    } 
 }

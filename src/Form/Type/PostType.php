@@ -18,17 +18,17 @@ class PostType extends AbstractType
             ->add('text', TextareaType::class, [
                     'attr' => ['rows' => '10'],
                     'label' => 'Your dream'
-                ])
+            ])
             ->add('dream', CheckboxType::class, [
                     'required' => false,
                     'label' => 'Was it a nightmare ?'
-                                    ])
+            ])
             // ->add('tags', ChoiceType::class, [
             //         "multiple" => true
             //     ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Publish'
-                ])
+            ])
         ;
     }
 }
