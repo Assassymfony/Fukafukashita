@@ -8,12 +8,22 @@
         <link rel="stylesheet" href="{{ asset('styles/app.css')}}">
 
         {% block stylesheets %}
+        <style>
+            .body-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 80vh;
+                padding: 20px;
+                background-color: #f0f0f0;
+            }
+        </style>
         {% endblock %}
 
         {% block javascripts %}
         {% endblock %}
     </head>
-    <body>
+    <body >
         <header class="{{ nightmare|default('') }}">
             <nav>
                 <div class="nav-links">
@@ -33,6 +43,8 @@
                 </div>
             </nav>
         </header>
-        {% block body %}{% endblock %}
+         <div class="body-container">
+            {% block body %}{% endblock %}
+        </div>
         <button class="floating-button" onclick="location.href='/post/new'">+</button>
 </html>
