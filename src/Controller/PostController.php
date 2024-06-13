@@ -9,19 +9,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Post;
 use App\Form\Type\PostType;
-use App\Form\Type\CommentType;
+use App\Form\CommentType;
 use App\Form\Type\SimpleSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
 {
 
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
+    public function __construct(private EntityManagerInterface $em){}
 
     #[Route('/', name: 'all_posts', methods: ['GET'])]
     public function getAllPost(): Response
