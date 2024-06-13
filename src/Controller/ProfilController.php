@@ -66,6 +66,12 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}/unfollow', name: 'profil_unfollow', requirements: ['page' => '\d+'])]
     public function unfollowProfil(int $id): Response
     {
+        try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+        }catch (\Exception $e){
+            return $this->redirectToRoute('app_login');
+        }
+        
         $profil = $this->mgr->find(Profil::class, $id);
         if ($profil instanceof Profil) {
             $profil->removeFollower($this->getUser());
@@ -101,14 +107,6 @@ class ProfilController extends AbstractController
         ]);
     }
 
-    // #[Route('/profil/new', name: 'profil_new')]
-    // public function new(): Response
-    // {
-    //     $profil = new Profil();
-
-    //     return $this->redirectToRoute('profil_show', ['id' => $profil->getId()]);
-    // }
-
     #[Route('/profil/{id}/edit', name: 'profil_edit', requirements: ['page' => '\d'])]
     public function editProfil(int $id, Request $request): Response
     {
@@ -134,12 +132,20 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}/follow', name: 'profil_follow', requirements: ['page' => '\d+'])]
     public function followProfil(int $id): Response
     {
+        try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+        }catch (\Exception $e){
+            return $this->redirectToRoute('app_login');
+        }
         $profil = $this->mgr->find(Profil::class, $id);
+
         if ($profil instanceof Profil) {
-            $profil->addFollower($this->getUser());
-            $this->mgr->persist($profil);
-            $this->mgr->flush();
-            $this->addFlash('success', '');
+            if ($profil->getId() !== $this->getUser()->getId()) {
+                $profil->addFollower($this->getUser());
+                $this->mgr->persist($profil);
+                $this->mgr->flush();
+                $this->addFlash('success', '');
+            }
             return $this->redirectToRoute('profil_show', ['id' => $id]);
         } else {
             $this->addFlash('error', '');
