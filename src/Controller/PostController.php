@@ -20,7 +20,7 @@ class PostController extends AbstractController
         $this->em = $em;
     }
 
-    # DEBUG: Ne doit pas être laissé en production.
+    # DEBUG : Ne doit pas être laissé en production.
     #[Route('/', name: 'all post', methods: ['GET'])]
     public function getAllPost(): Response
     {

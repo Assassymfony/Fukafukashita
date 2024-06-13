@@ -208,7 +208,7 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addFollower(self $follower): static
     {
-        if (!$this->followers->contains($follower) && $follower!=$this) {
+        if (!$this->followers->contains($follower) && $follower !== $this) {
             $this->followers->add($follower);
         }
 
