@@ -6,9 +6,18 @@
   padding: 20px;
   transition: .3s;
 
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
   &.nightmare {
     background-color: #1b1447;
     color: white;
+
+    a {
+      color: white;
+    }
   }
 }
 
@@ -32,9 +41,4 @@
     white-space: pre-wrap;
     font-size: 1em;
   }
-}
-
-a {
-  text-decoration: none;
-  color: black;
 }

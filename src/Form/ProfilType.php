@@ -16,7 +16,6 @@ class ProfilType extends AbstractType
             ->add('name')
             ->add('description')
             // ->add('password')
-        
         ;
     }
 
