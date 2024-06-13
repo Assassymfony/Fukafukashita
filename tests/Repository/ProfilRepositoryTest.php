@@ -19,7 +19,6 @@ class ProfilRepositoryTest extends WebTestCase
     {
         self::bootKernel();
 
-        $this->client = static::createClient();
         $this->em = static::getContainer()->get(EntityManagerInterface::class);
 
 
@@ -35,13 +34,10 @@ class ProfilRepositoryTest extends WebTestCase
         $this->em->persist($profil);
         $this->em->flush();
 
-        // Récupérer l'ID du profil
         $profilId = $profil->getId();
 
-        // Rechercher le profil par ID
         $foundProfil = $this->profilRepository->find($profilId);
 
-        // Vérifier si le profil retrouvé correspond au profil créé
         $this->assertEquals('John Doe', $foundProfil->getName());
         $this->assertEquals('Jean Dupont', $foundProfil->getDescription());
     }

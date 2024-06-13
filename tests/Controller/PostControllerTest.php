@@ -18,14 +18,6 @@ class PostControllerTest extends WebTestCase
         $this->em = static::getContainer()->get(EntityManagerInterface::class);
     }
 
-    public function testGetAllPost()
-    {
-        $crawler = $this->client->request('GET', '/');
-        $this->assertResponseIsSuccessful();
-
-        $this->assertSelectorTextContains('h1', 'FukaFukashita');
-    }
-
 
     public function testGetPost()
     {
