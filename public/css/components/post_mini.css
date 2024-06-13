@@ -9,6 +9,16 @@
   a {
     text-decoration: none;
     color: black;
+
+    img {
+      margin-right: 5px;
+    }
+  }
+
+  .profile {
+    display: flex;
+    flex-direction: rows;
+    align-items: center;
   }
 
   &.nightmare {
