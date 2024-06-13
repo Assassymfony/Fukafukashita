@@ -33,6 +33,7 @@
                 <a class="nav-link {{ nightmare|default('') }}" href="/"><h1>Fukafukashita</h1></a>
                 </div>
                 <div class="nav-links">
+                        <a href="/post/search" class="nav-link {{ nightmare|default('') }}">Search</a>
                     {% if is_granted('ROLE_USER') %}
                         <a href="/profil/post/follow" class="nav-link {{ nightmare|default('') }}">Feed</a>
                         <a href="/profil" class="nav-link {{ nightmare|default('') }}">Profile</a>

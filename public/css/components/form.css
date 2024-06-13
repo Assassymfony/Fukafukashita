@@ -1,5 +1,11 @@
 .form-container {
 
+  &.form-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   .form-group {
     display: flex;
     flex-direction: column;

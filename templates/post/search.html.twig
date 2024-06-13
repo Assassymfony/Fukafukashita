@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/components/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/post_mini.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/search.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="wrapper">
+<div class="form-container">
+{{ form(form) }}
+</div>
+
+<hr>
+
+{% if posts is defined %}
+  {% for post in posts %}
+    {% include 'post/post_mini.html.twig' with { 'post': post} %}
+  {% endfor %}
+{% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  background-color: #f2f2f7;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 1rem;
+  margin-top: 5vh;
+  border: 3px solid black;
+  gap: 1rem;
+
+  .form-container {
+    #simple_search {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+      justify-content: space-between;
+
+      :first-child {
+        width: 100%;
+      }
+
+      #simple_search_search {
+        display: flex;
+        flex-grow: 1;
+      }
+    }
+  }
+}

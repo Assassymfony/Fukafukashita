@@ -9,18 +9,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Post;
 use App\Form\Type\PostType;
-use App\Form\Type\CommentType;
+use App\Form\CommentType;
+use App\Form\Type\SimpleSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
 {
 
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
+    public function __construct(private EntityManagerInterface $em){}
 
     #[Route('/', name: 'all_posts', methods: ['GET'])]
     public function getAllPost(): Response
@@ -28,7 +24,7 @@ class PostController extends AbstractController
         $posts = $this->em->getRepository(Post::class)->findAll();
 
         return $this->render('post/all.html.twig', [
-            "posts" => $posts,
+            "posts" => array_reverse($posts),
             "title" => "Derniers Posts"
         ]);
     }
@@ -36,16 +32,13 @@ class PostController extends AbstractController
     #[Route(
         '/post/{id}',
         name: 'display_post',
-        methods: ['GET', 'POST'],
-        requirements: ['id' => '\d+']
+        requirements: ['id' => '\d+'],
+        methods: ['GET', 'POST']
     )]
     public function getPost(int $id, Request $request): Response
     {
         $post = $this->em->getRepository(Post::class)->find($id);
 
-        if (!$post) {
-        }
-        
         $comment = new Commentary();
         $commentForm = $this->createForm(CommentType::class, $comment);
 
@@ -135,4 +128,27 @@ class PostController extends AbstractController
             'form' => $form,
         ]);
     }
+    
+    #[Route('/post/search', name: 'search_post', methods: ['GET', 'POST'])]
+    public function searchPost(Request $request): Response
+    {
+        $form = $this->createForm(SimpleSearchType::class);
+
+        $form->handleRequest($request);        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchString = $form->get('search')->getData();
+            $posts = $this->em->getRepository(Post::class)->searchByTitleOrText($searchString);
+
+            return $this->render('post/search.html.twig', [
+                'posts' => $posts,
+                'form' => $this->createForm(SimpleSearchType::class)
+            ]);
+
+            // return new Response(print_r($posts, true));
+        }
+
+        return $this->render('post/search.html.twig', [
+                'form' => $form
+        ]);
+    } 
 }
