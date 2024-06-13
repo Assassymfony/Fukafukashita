@@ -146,10 +146,10 @@ class ProfilController extends AbstractController
 
         if ($this->getUser()->getId() === $profil->getId())
         {
-
-            $this->getUser()->eraseCredentials();
-            //$this->mgr->remove($profil);
-            //$this->mgr->flush();
+            $this->container->get('security.token_storage')->setToken(null);
+            //$this->getUser()->eraseCredentials();
+            $this->mgr->remove($profil);
+            $this->mgr->flush();
             return $this->redirectToRoute('app_logout');
         }
 
