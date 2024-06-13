@@ -1,34 +1,29 @@
 <?php
 
+namespace App\Tests\Repository;
+
 use App\Entity\Profil;
 use App\Repository\ProfilRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\EntityManager;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ProfilRepositoryTest extends KernelTestCase
+class ProfilRepositoryTest extends WebTestCase
 {
+    private ProfilRepository $profilRepository;
 
+    private mixed $em;
 
-    /**
-     * @var ProfilRepository
-     */
-    private $profilRepository;
-
-    public function __construct(private EntityManagerInterface $entityManager) {
-        
-    }
 
     protected function setUp(): void
     {
         self::bootKernel();
 
-        // Récupérer l'EntityManager
-        
+        $this->client = static::createClient();
+        $this->em = static::getContainer()->get(EntityManagerInterface::class);
 
-        // Récupérer le repository Profil
-        $this->profilRepository = $this->entityManager->getRepository(Profil::class);
+
+        $this->profilRepository = $this->em->getRepository(Profil::class);
     }
 
     public function testFindById()
@@ -37,8 +32,8 @@ class ProfilRepositoryTest extends KernelTestCase
         $profil = new Profil();
         $profil->setName('John Doe');
         $profil->setDescription('Jean Dupont');
-        $this->entityManager->persist($profil);
-        $this->entityManager->flush();
+        $this->em->persist($profil);
+        $this->em->flush();
 
         // Récupérer l'ID du profil
         $profilId = $profil->getId();
@@ -57,14 +52,14 @@ class ProfilRepositoryTest extends KernelTestCase
         $profil1 = new Profil();
         $profil1->setName('Alice');
         $profil1->setDescription('Alice\'s profile');
-        $this->entityManager->persist($profil1);
+        $this->em->persist($profil1);
 
         $profil2 = new Profil();
         $profil2->setName('Bob');
         $profil2->setDescription('Bob\'s profile');
-        $this->entityManager->persist($profil2);
+        $this->em->persist($profil2);
 
-        $this->entityManager->flush();
+        $this->em->flush();
 
         // Rechercher les profils par nom
         $foundProfils = $this->profilRepository->findBy(['name' => 'Alice']);
@@ -81,8 +76,8 @@ class ProfilRepositoryTest extends KernelTestCase
         $profil = new Profil();
         $profil->setName('John Doe');
         $profil->setDescription('Jean Dupont');
-        $this->entityManager->persist($profil);
-        $this->entityManager->flush();
+        $this->em->persist($profil);
+        $this->em->flush();
 
         // Rechercher le profil par nom
         $foundProfil = $this->profilRepository->findOneBy(['name' => 'John Doe']);
@@ -91,13 +86,16 @@ class ProfilRepositoryTest extends KernelTestCase
         $this->assertEquals('Jean Dupont', $foundProfil->getDescription());
     }
 
+    /**
+     * @throws Exception
+     */
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        
-        $this->entityManager->getConnection()->executeStatement('DELETE FROM profil');
-        $this->entityManager->close();
-        
+
+        $this->em->getConnection()->executeStatement('DELETE FROM profil');
+        $this->em->close();
+
     }
 }

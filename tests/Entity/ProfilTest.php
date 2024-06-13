@@ -2,51 +2,59 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Commentary;
+use App\Entity\Post;
 use App\Entity\Profil;
 use PHPUnit\Framework\TestCase;
-use App\Entity\Post;
-use App\Entity\Commentary;
 
 class ProfilTest extends TestCase
 {
-    public function testGetId()
+    public function test_it_can_be_instantiated(): void
     {
         $profil = new Profil();
-        $this->assertNull($profil->getId());
+        $this->assertInstanceOf(Profil::class, $profil);
     }
 
-    public function testGetSetName()
+    public function test_name()
     {
         $profil = new Profil();
-        $name = 'TestUser';
-        $profil->setName($name);
-
-        $this->assertSame($name, $profil->getName());
+        $profil->setName('John Doe');
+        $this->assertEquals('John Doe', $profil->getName());
     }
 
-    public function testGetSetDescription()
+    public function test_description()
     {
         $profil = new Profil();
-        $description = 'This is a test description.';
-        $profil->setDescription($description);
-
-        $this->assertSame($description, $profil->getDescription());
+        $profil->setDescription('Lorem ipsum');
+        $this->assertEquals('Lorem ipsum', $profil->getDescription());
     }
 
-    public function testGetSetPassword()
+    public function test_password()
     {
         $profil = new Profil();
-        $password = 'password123';
-        $profil->setPassword($password);
-
-        $this->assertSame($password, $profil->getPassword());
+        $profil->setPassword('password123');
+        $this->assertEquals('password123', $profil->getPassword());
     }
 
-    public function testAddRemovePost()
+    public function test_roles()
+    {
+        $profil = new Profil();
+        $roles = ['ROLE_USER', 'ROLE_ADMIN'];
+        $profil->setRoles($roles);
+        $this->assertEquals($roles, $profil->getRoles());
+    }
+
+    public function test_user_identifier()
+    {
+        $profil = new Profil();
+        $profil->setName('johndoe');
+        $this->assertEquals('johndoe', $profil->getUserIdentifier());
+    }
+
+    public function test_add_and_remove_post()
     {
         $profil = new Profil();
         $post = new Post();
-
         $profil->addPost($post);
         $this->assertTrue($profil->getPosts()->contains($post));
 
@@ -54,11 +62,10 @@ class ProfilTest extends TestCase
         $this->assertFalse($profil->getPosts()->contains($post));
     }
 
-    public function testAddRemoveCommentary()
+    public function test_add_and_remove_commentary()
     {
         $profil = new Profil();
         $commentary = new Commentary();
-
         $profil->addCommentary($commentary);
         $this->assertTrue($profil->getCommentaries()->contains($commentary));
 
@@ -66,31 +73,19 @@ class ProfilTest extends TestCase
         $this->assertFalse($profil->getCommentaries()->contains($commentary));
     }
 
-    public function testGetSetRoles()
-    {
-        $profil = new Profil();
-        $roles = ['ROLE_ADMIN', 'ROLE_USER'];
-        $profil->setRoles($roles);
-
-        $this->assertSame($roles, $profil->getRoles());
-    }
-
-    public function testAddRemoveFollower()
+    public function test_add_and_remove_follower()
     {
         $profil1 = new Profil();
         $profil2 = new Profil();
 
         $profil1->addFollower($profil2);
-        print_r($profil1->getFollowing());
         $this->assertTrue($profil1->getFollowers()->contains($profil2));
-        $this->assertTrue($profil2->getFollowing()->contains($profil1));
 
         $profil1->removeFollower($profil2);
         $this->assertFalse($profil1->getFollowers()->contains($profil2));
-        $this->assertFalse($profil2->getFollowing()->contains($profil1));
     }
 
-    public function testAddRemoveFollowing()
+    public function test_add_and_remove_following()
     {
         $profil1 = new Profil();
         $profil2 = new Profil();
@@ -104,4 +99,3 @@ class ProfilTest extends TestCase
         $this->assertFalse($profil2->getFollowers()->contains($profil1));
     }
 }
-

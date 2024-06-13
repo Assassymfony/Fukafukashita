@@ -232,7 +232,7 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addFollowing(self $following): static
     {
-        if (!$this->following->contains($following) && $following!=$this) {
+        if (!$this->following->contains($following) && $following !== $this) {
             $this->following->add($following);
             $following->addFollower($this);
         }
