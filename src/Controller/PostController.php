@@ -37,16 +37,13 @@ class PostController extends AbstractController
     #[Route(
         '/post/{id}',
         name: 'display_post',
-        methods: ['GET', 'POST'],
-        requirements: ['id' => '\d+']
+        requirements: ['id' => '\d+'],
+        methods: ['GET', 'POST']
     )]
     public function getPost(int $id, Request $request): Response
     {
         $post = $this->em->getRepository(Post::class)->find($id);
 
-        if (!$post) {
-        }
-        
         $comment = new Commentary();
         $commentForm = $this->createForm(CommentType::class, $comment);
 
