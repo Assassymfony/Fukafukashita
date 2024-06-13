@@ -1,12 +1,10 @@
-{# templates/profil/show.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Profil - {{ profil.name }}{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/css/components/profil.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/post_mini.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -17,7 +15,6 @@
                 <h1>{{ profil.name }}</h1>
                 <br>
                 <p>{{ profil.description }}</p>
-                
             </div>
         </div>
         <div class="horizontal-layout">
@@ -37,7 +34,6 @@
                 <a href="{{ path('profil_following', {id: profil.id}) }}" class="count-button">{{ profil.following.count() }} following</a>
             </div>
         </div>    
-    </div>
 
     <div class="posts-container">
         {% if posts|length > 0 %}
@@ -48,6 +44,7 @@
             </ul>
         {% endif %}
     </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}

@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/components/post.css') }}">
+{% endblock %}
+
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="{{ asset('css/components/post.css') }}">
-
-<title>{{ post.title }}</title>
 <div id="post-wrapper">
   <div id="post">
     <div id="post-info">
