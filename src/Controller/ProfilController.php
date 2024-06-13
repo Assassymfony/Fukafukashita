@@ -71,7 +71,6 @@ class ProfilController extends AbstractController
         }catch (\Exception $e){
             return $this->redirectToRoute('app_login');
         }
-        
         $profil = $this->mgr->find(Profil::class, $id);
         if ($profil instanceof Profil) {
             $profil->removeFollower($this->getUser());
