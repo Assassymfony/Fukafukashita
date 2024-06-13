@@ -1,11 +1,17 @@
 #post-wrapper {
   width: 70%;
   background-color: #f2f2f7;
+  color: black;
   margin: 0 auto;
   border: 3px solid black;
   border-radius: 1rem;
   padding: 20px;
-  margin-top: 10vh;
+  margin-top: 5vh;
+
+  &.nightmare {
+    background-color: #1b1447;
+    color: white;
+  }
 
   h1 {
     font-size: 3em;
@@ -30,7 +36,10 @@
   }
 
   #comments-wrapper {
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0px;
   }
 }
 

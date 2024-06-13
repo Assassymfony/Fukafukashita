@@ -21,7 +21,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-                default_target_path: all post
+                default_target_path: all_posts
             logout:
                 path: app_logout
                 target: /login

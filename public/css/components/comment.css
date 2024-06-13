@@ -2,7 +2,12 @@
   background-color: #f2f2f7;
   border: 1px solid black;
   border-radius: 1rem;
-  padding: 20px;
+  padding: 10px;
+
+  &.nightmare {
+    background-color: #3a3c6e;
+    color: white;
+  }
 
   .comment-info {
     display: flex;
@@ -15,7 +20,10 @@
     p {
       white-space: pre-wrap;
       font-size: 1em;
+      margin: 0 auto;
     }
+
+    margin-left: 5px;
   }
 
   a {

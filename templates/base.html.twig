@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="{{ nightmare|default('') }}">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Fukafukashita{% endblock %}</title>
@@ -14,19 +14,21 @@
         {% endblock %}
     </head>
     <body>
-        <header>
+        <header class="{{ nightmare|default('') }}">
             <nav>
                 <div class="nav-links">
                 <a class="nav-logo" href="/">
                     <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
                 </a>
-                <a class="nav-link" href="/"><h1>FukaFukashita</h1></a>
+                <a class="nav-link {{ nightmare|default('') }}" href="/"><h1>Fukafukashita</h1></a>
                 </div>
                 <div class="nav-links">
-                    <a href="/profil/post/follow" class="nav-link">Abonnements</a>
-                    <a href="/profil" class="nav-link">Compte</a>
                     {% if is_granted('ROLE_USER') %}
-                        <a href="/logout" class="nav-link">Se déconnecter</a>
+                        <a href="/profil/post/follow" class="nav-link {{ nightmare|default('') }}">Feed</a>
+                        <a href="/profil" class="nav-link {{ nightmare|default('') }}">Profile</a>
+                        <a href="/logout" class="nav-link {{ nightmare|default('') }}">Log out</a>
+                    {% else %}
+                        <a href="/login" class="nav-link {{ nightmare|default('') }}">Log in</a>
                     {% endif %}
                 </div>
             </nav>
