@@ -18,8 +18,8 @@
             <button type="submit" class="btn btn-primary follow-button">Save</button>
         {{ form_end(form) }}
 
-        <form method="post" action="{{ path('profil_delete', {id: profil.id}) }}" onsubmit="return confirm('Are you sure you want to delete this profile?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ profil.id) }}">
+        <form method="post" action="{{ path('profil_delete') }}" onsubmit="return confirm('Are you sure you want to delete this profile?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
             <button class="btn btn-danger delete-button">Delete Profile</button>
         </form>
     </div>

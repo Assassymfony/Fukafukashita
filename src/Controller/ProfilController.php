@@ -25,11 +25,10 @@ class ProfilController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         return $this->redirectToRoute('profil_show', ['id' => $this->getUser()->getId()]);
     }
-    #[Route('/profil/{id}', name: 'profil_show', requirements: ['page' => '\d+'])]
+    #[Route('/profil/{id}', name: 'profil_show', requirements: ['id' => '\d+'])]
     public function profil(int $id): Response
     {
         $connected = $this->isGranted('ROLE_USER');
-        // $connected = $this->isGranted('ROLE_USER') != false;
 
         $profil = $this->mgr->find(Profil::class, $id);
         $posts = $profil->getPosts();
@@ -46,11 +45,7 @@ class ProfilController extends AbstractController
     #[Route('/profil/post/follow', name: 'profil_post_follow')]
     public function postProfilfollow(): Response
     {
-        try{
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-        }catch (\Exception $e){
-            return $this->redirectToRoute('app_login');
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $profil = $this->getUser();
         $posts = $this->postRepository->getPostFromFollowed($profil);
         return $this->render('post/all.html.twig', [
@@ -62,11 +57,7 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}/unfollow', name: 'profil_unfollow', requirements: ['page' => '\d+'])]
     public function unfollowProfil(int $id): Response
     {
-        try{
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-        }catch (\Exception $e){
-            return $this->redirectToRoute('app_login');
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $profil = $this->mgr->find(Profil::class, $id);
         if ($profil instanceof Profil) {
             $profil->removeFollower($this->getUser());
@@ -127,11 +118,7 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}/follow', name: 'profil_follow', requirements: ['page' => '\d+'])]
     public function followProfil(int $id): Response
     {
-        try{
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-        }catch (\Exception $e){
-            return $this->redirectToRoute('app_login');
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $profil = $this->mgr->find(Profil::class, $id);
 
         if ($profil instanceof Profil) {
@@ -148,22 +135,25 @@ class ProfilController extends AbstractController
         }
     }
 
-    #[Route('/profil/{id}/delete', name: 'profil_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
-    public function delete(int $id, Request $request): Response
+    #[Route('/profil/delete', name: 'profil_delete', methods: ['POST'])]
+    public function delete(Request $request): Response
     {
-        $profil = $this->mgr->find(Profil::class, $id);
+        $profil = $this->mgr->find(Profil::class, $this->getUser()->getId());
 
         if (!$profil) {
             throw $this->createNotFoundException('The profile does not exist');
         }
 
-        if ($this->isCsrfTokenValid('delete' . $profil->getId(), $request->request->get('_token'))) {
+        if ($this->getUser()->getId() === $profil->getId())
+        {
+            $this->container->get('security.token_storage')->setToken(null);
+            //$this->getUser()->eraseCredentials();
             $this->mgr->remove($profil);
             $this->mgr->flush();
-            $this->addFlash('success', 'Profile deleted successfully');
+            return $this->redirectToRoute('app_logout');
         }
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_logout');
     }
 
 
