@@ -16,9 +16,8 @@ class ProfilController extends AbstractController
 {
 
 
-    public function __construct(private EntityManager $mgr, private PostRepository $postRepository)
-    {
-    }
+    public function __construct(private EntityManager $mgr, private PostRepository $postRepository){}
+
     #[Route(path: "/profil", name: "profil_perso", methods: ["GET"])]
     public function baseProfil(): Response
     {
@@ -101,18 +100,17 @@ class ProfilController extends AbstractController
         ]);
     }
 
-    // #[Route('/profil/new', name: 'profil_new')]
-    // public function new(): Response
-    // {
-    //     $profil = new Profil();
-
-    //     return $this->redirectToRoute('profil_show', ['id' => $profil->getId()]);
-    // }
-
-    #[Route('/profil/{id}/edit', name: 'profil_edit', requirements: ['page' => '\d'])]
-    public function editProfil(int $id, Request $request): Response
+    #[Route('/profil/edit', name: 'profil_edit', requirements: ['page' => '\d'])]
+    public function editProfil(Request $request): Response
     {
-        $profil = $this->mgr->find(Profil::class, $id);
+        try{
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+        }catch (\Exception $e){
+            return $this->redirectToRoute('app_login');
+        }
+        $profil = $this->getUser();
+        $id = $profil->getId();
+        
 
         $form = $this->createForm(ProfilType::class, $profil);
 
@@ -134,8 +132,9 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}/follow', name: 'profil_follow', requirements: ['page' => '\d+'])]
     public function followProfil(int $id): Response
     {
+
         $profil = $this->mgr->find(Profil::class, $id);
-        if ($profil instanceof Profil) {
+        if ($profil instanceof Profil && $profil != $this->getUser() && $this->getUser()->getId() != $profil->getId()) {
             $profil->addFollower($this->getUser());
             $this->mgr->persist($profil);
             $this->mgr->flush();
@@ -150,6 +149,12 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}/delete', name: 'profil_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
     public function delete(int $id, Request $request): Response
     {
+        try {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+        } catch (\Exception $e) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $profil = $this->mgr->find(Profil::class, $id);
 
         if (!$profil) {
