@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
-
-
-{% block body %}
-
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset ('styles/app.css')}}">
 <link rel="stylesheet" href="{{ asset('css/components/post_mini.css') }}">
-<link rel="stylesheet" href="{{ asset('css/components/post_all.css') }}">
+{% endblock %}
 
+{% block title %}All posts{% endblock %}
+
+{% block body%}
 <div id="wrapper">
   <h1>{{title}}</h1>
   

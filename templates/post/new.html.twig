@@ -1,5 +1,21 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset ('styles/app.css')}}">
+<link rel="stylesheet" href="{{ asset('css/components/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/post.css') }}">
+{% endblock %}
+
+{% block title %}New post{% endblock %}
+
+{% form_theme form 'form/theme.html.twig' %}
+
 {% block body %}
-{{ form(form) }}
+<div id="post-wrapper">
+  <h1>Post your dream</h1>
+
+  <div class="form-container">
+    {{ form(form) }}
+  </div>
+</div>
 {% endblock %}

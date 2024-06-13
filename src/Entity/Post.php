@@ -7,6 +7,8 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -98,7 +100,6 @@ class Post
         return $this;
     }
 
-
     public function getUpVote(): ?int
     {
         return $this->upVote;
@@ -189,6 +190,16 @@ class Post
         return $this;
     }
 
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('title', new Assert\Length([
+            'min' => 10,
+            'max' => 200,
+            'minMessage' => 'Your title must be at least {{ limit }} characters long',
+            'maxMessage' => 'Your title cannot be longer than {{ limit }} characters',
+        ]));
+    }
+    
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
