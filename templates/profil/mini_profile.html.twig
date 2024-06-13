@@ -1,0 +1,21 @@
+<a href="{{ path('profil_show', {id: profil.id}) }}">
+    <div class="profile-card">
+        <div class="profile-user">
+            <img src="https://api.dicebear.com/8.x/big-smile/svg?translateY=-5&seed={{ profil.name }}" alt="Profile Image">
+            <span class="profile-name">{{ profil.name }}</span>
+            
+			<div class="profile-info-element">
+                <span>{{ profil.posts|length }}</span>
+                <span>Posts</span>
+            </div>
+            <div class="profile-info-element">
+                <span>{{ profil.followers|length }}</span>
+                <span>Followers</span>
+            </div>
+            <div class="profile-info-element">
+                <span>{{ profil.following|length }}</span>
+                <span>Following</span>
+            </div>
+        </div>
+    </div>
+</a>
