@@ -22,11 +22,7 @@ class ProfilController extends AbstractController
     #[Route(path: "/profil", name: "profil_perso", methods: ["GET"])]
     public function baseProfil(): Response
     {
-        try {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-        } catch (\Exception $e) {
-            return $this->redirectToRoute('app_login');
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         return $this->redirectToRoute('profil_show', ['id' => $this->getUser()->getId()]);
     }
     #[Route('/profil/{id}', name: 'profil_show', requirements: ['page' => '\d+'])]
