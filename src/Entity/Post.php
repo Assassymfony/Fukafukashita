@@ -49,10 +49,14 @@ class Post
     #[ORM\ManyToMany(targetEntity: Tags::class, inversedBy: 'posts')]
     private Collection $tags;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
         $this->commentaries = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -194,5 +198,17 @@ class Post
             'minMessage' => 'Your title must be at least {{ limit }} characters long',
             'maxMessage' => 'Your title cannot be longer than {{ limit }} characters',
         ]));
+    }
+    
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }

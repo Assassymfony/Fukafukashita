@@ -21,13 +21,14 @@ class PostController extends AbstractController
     }
 
     # DEBUG: Ne doit pas être laissé en production.
-    #[Route('/post/all', name: 'all post', methods: ['GET'])]
+    #[Route('/', name: 'all post', methods: ['GET'])]
     public function getAllPost(): Response
     {
         $posts = $this->em->getRepository(Post::class)->findAll();
 
         return $this->render('post/all.html.twig', [
-            "posts" => $posts
+            "posts" => $posts,
+            "title" => "Derniers Posts"
         ]);
     }
 
@@ -52,6 +53,8 @@ class PostController extends AbstractController
     #[Route('/post/new/', name: 'add_post', methods: ['GET', 'POST'])]
     public function addPost(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
 

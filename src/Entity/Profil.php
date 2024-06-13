@@ -19,6 +19,7 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(type: 'json', nullable: true)]
     private array $roles = [];
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -45,14 +46,23 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, self>
      */
-    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'followers')]
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'following')]
     private Collection $followers;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'followers')]
+    private Collection $following;
+
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->commentaries = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->following = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -161,6 +171,33 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        // $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->name;
+    }
+
     /**
      * @return Collection<int, self>
      */
@@ -171,7 +208,7 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addFollower(self $follower): static
     {
-        if (!$this->followers->contains($follower)) {
+        if (!$this->followers->contains($follower) && $follower!=$this) {
             $this->followers->add($follower);
         }
 
@@ -185,29 +222,30 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoles(): array
+    /**
+     * @return Collection<int, self>
+     */
+    public function getFollowing(): Collection
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->following;
     }
 
-    public function setRoles(array $roles): self
+    public function addFollowing(self $following): static
     {
-        $this->roles = $roles;
+        if (!$this->following->contains($following) && $following!=$this) {
+            $this->following->add($following);
+            $following->addFollower($this);
+        }
 
         return $this;
     }
 
-    public function eraseCredentials(): void
+    public function removeFollowing(self $following): static
     {
-        // TODO: Implement eraseCredentials() method.
-    }
+        if ($this->following->removeElement($following)) {
+            $following->removeFollower($this);
+        }
 
-    public function getUserIdentifier(): string
-    {
-        return $this->name;
+        return $this;
     }
 }
