@@ -12,6 +12,23 @@
         {% endblock %}
     </head>
     <body>
+        <header>
+            <nav>
+                <div class="nav-links">
+                <a class="nav-logo" href="/">
+                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+                </a>
+                <a class="nav-link" href="/"><h1>FukaFukashita</h1></a>
+                </div>
+                <div class="nav-links">
+                    <a href="/profil/post/follow" class="nav-link">Abonnements</a>
+                    <a href="/profil" class="nav-link">Compte</a>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="/logout" class="nav-link">Se déconnecter</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
         {% block body %}{% endblock %}
-    </body>
+        <button class="floating-button" onclick="location.href='/post/new'">+</button>
 </html>

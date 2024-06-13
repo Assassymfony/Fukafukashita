@@ -27,7 +27,8 @@ class PostController extends AbstractController
         $posts = $this->em->getRepository(Post::class)->findAll();
 
         return $this->render('post/all.html.twig', [
-            "posts" => $posts
+            "posts" => $posts,
+            "title" => "Derniers Posts"
         ]);
     }
 
@@ -55,12 +56,12 @@ class PostController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
 
         $post = new Post();
-
         $form = $this->createForm(PostType::class, $post);
-
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //$dateNow = new DateTime();
+            
             $form = $form->getData();
             $user = $this->getUser();
             $post->setProfil($user);

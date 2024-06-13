@@ -1,9 +1,17 @@
-<h1>All website posts</h1>
-<a href="{{ path('add_post') }}" class="btn btn-primary">Créer un nouveau post</a>
-{% for post in posts %}
-  <div>
-    <span>Id: {{ post.id }}</span>
-    <span>Title: {{ post.title }}</span>
-    <span>Content: {{ post.text }}</span>
-  </div>
-{% endfor %}
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ asset('css/components/post_mini.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/post_all.css') }}">
+
+<div id="wrapper">
+  <h1>{{title}}</h1>
+  
+  {% for post in posts %}
+    {% include 'post/post_mini.html.twig' with {'post' : post} %}
+  {% endfor %}
+</div>
+{% endblock %}
