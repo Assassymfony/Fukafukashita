@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentary;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Post;
 use App\Form\Type\PostType;
+use App\Form\Type\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
@@ -20,8 +22,7 @@ class PostController extends AbstractController
         $this->em = $em;
     }
 
-    # DEBUG: Ne doit pas être laissé en production.
-    #[Route('/', name: 'all post', methods: ['GET'])]
+    #[Route('/', name: 'all_posts', methods: ['GET'])]
     public function getAllPost(): Response
     {
         $posts = $this->em->getRepository(Post::class)->findAll();
@@ -35,18 +36,35 @@ class PostController extends AbstractController
     #[Route(
         '/post/{id}',
         name: 'display_post',
-        methods: ['GET'],
+        methods: ['GET', 'POST'],
         requirements: ['id' => '\d+']
     )]
-    public function getPost(int $id): Response
+    public function getPost(int $id, Request $request): Response
     {
         $post = $this->em->getRepository(Post::class)->find($id);
 
         if (!$post) {
         }
+        
+        $comment = new Commentary();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+
+        $commentForm->handleRequest($request);
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $user = $this->getUser();
+
+            $comment->setProfil($user);
+            $comment->setPost($post);
+
+            $this->em->persist($comment);
+            $this->em->flush();
+
+            return $this->redirectToRoute('display_post', ['id' => $id]);
+        }
 
         return $this->render('post/post.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'commentForm' => $commentForm,
         ]);
     }
 
@@ -87,5 +105,34 @@ class PostController extends AbstractController
             $this->em->flush();
         }
         return new Response();
+    }
+
+    #[Route('/post/{id}/comment', name: 'post_comment', methods: ['POST'])]
+    public function addComment(int $id, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+
+        $comment = new Commentary();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post = $this->em->getRepository(Post::class)->find($id);
+            
+            $form = $form->getData();
+            $user = $this->getUser();
+
+            $comment->setProfil($user);
+            $comment->setPost($post);
+
+            $this->em->persist($comment);
+            $this->em->flush();
+
+            return $this->redirectToRoute('display_post', ['id' => $id]);
+        }
+
+        return $this->render('post/new.html.twig', [
+            'form' => $form,
+        ]);
     }
 }

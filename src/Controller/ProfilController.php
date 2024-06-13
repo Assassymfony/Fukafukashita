@@ -6,7 +6,6 @@ use App\Entity\Profil;
 use App\Form\ProfilType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManager;
-use SebastianBergmann\Environment\Console;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,16 +14,15 @@ use Symfony\Component\HttpFoundation\Request;
 class ProfilController extends AbstractController
 {
 
-
-    public function __construct(private EntityManager $mgr, private PostRepository $postRepository)
-    {
-    }
+    public function __construct(private EntityManager $mgr, private PostRepository $postRepository) {}
+    
     #[Route(path: "/profil", name: "profil_perso", methods: ["GET"])]
     public function baseProfil(): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         return $this->redirectToRoute('profil_show', ['id' => $this->getUser()->getId()]);
     }
+
     #[Route('/profil/{id}', name: 'profil_show', requirements: ['id' => '\d+'])]
     public function profil(int $id): Response
     {
@@ -40,7 +38,6 @@ class ProfilController extends AbstractController
             'connected' => $connected
         ]);
     }
-
 
     #[Route('/profil/post/follow', name: 'profil_post_follow')]
     public function postProfilfollow(): Response
@@ -136,7 +133,7 @@ class ProfilController extends AbstractController
     }
 
     #[Route('/profil/delete', name: 'profil_delete', methods: ['POST'])]
-    public function delete(Request $request): Response
+    public function delete(): Response
     {
         $profil = $this->mgr->find(Profil::class, $this->getUser()->getId());
 
@@ -155,6 +152,4 @@ class ProfilController extends AbstractController
 
         return $this->redirectToRoute('app_logout');
     }
-
-
 }

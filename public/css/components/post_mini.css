@@ -1,9 +1,24 @@
 #post-wrapper {
   background-color: #f2f2f7;
+  color: black;
   border: 3px solid black;
   border-radius: 1rem;
   padding: 20px;
   transition: .3s;
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  &.nightmare {
+    background-color: #1b1447;
+    color: white;
+
+    a {
+      color: white;
+    }
+  }
 }
 
 #post-wrapper:hover {
@@ -26,9 +41,4 @@
     white-space: pre-wrap;
     font-size: 1em;
   }
-}
-
-a {
-  text-decoration: none;
-  color: black;
 }

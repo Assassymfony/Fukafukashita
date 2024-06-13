@@ -1,11 +1,26 @@
 #post-wrapper {
   width: 70%;
   background-color: #f2f2f7;
+  color: black;
   margin: 0 auto;
   border: 3px solid black;
   border-radius: 1rem;
   padding: 20px;
-  margin-top: 25vh;
+  margin-top: 5vh;
+
+  &.nightmare {
+    background-color: #1b1447;
+    color: white;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+
+  p {
+    white-space: pre-wrap;
+    font-size: 1.2em;
+  }
 }
 
 #post-info {
@@ -15,18 +30,16 @@
   gap: 10px;
 }
 
-h1 {
-  font-size: 3em;
-}
-
-p {
-  white-space: pre-wrap;
-  font-size: 1.2em;
-}
-
 #comments {
   h2 {
     font-size: 30px;
+  }
+
+  #comments-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0px;
   }
 }
 
@@ -34,7 +47,24 @@ hr {
   color: black;
 }
 
-a {
-  text-decoration: none;
-  color: black;
+#comment {
+  display: flex;
+  flex-direction: rows;
+  align-items: center;
+  gap: 2rem;
+  justify-content: space-between;
+
+  :first-child {
+    width: 100%;
+  }
+
+  #comment_text {
+    display: flex;
+    flex-grow: 1;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
 }
