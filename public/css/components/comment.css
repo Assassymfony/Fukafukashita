@@ -1,0 +1,25 @@
+.comment-wrapper {
+  background-color: #f2f2f7;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 20px;
+
+  .comment-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .comment-text {
+    p {
+      white-space: pre-wrap;
+      font-size: 1em;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}

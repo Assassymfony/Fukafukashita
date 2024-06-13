@@ -2,6 +2,8 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('css/components/post.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/comment.css') }}">
 {% endblock %}
 
 {% block title %}{{ post.title }}{% endblock %}
@@ -24,6 +26,15 @@
 
   <div id="comments">
     <h2>Comments</h2>
+    <div class="form-container">
+      {{ form(commentForm) }}
+    </div>
+
+    <div id="comments-wrapper">
+      {% for comment in post.commentaries %}
+        {% include 'comment/comment.html.twig' with { 'comment' : comment} %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -5,7 +5,16 @@
   border: 3px solid black;
   border-radius: 1rem;
   padding: 20px;
-  margin-top: 25vh;
+  margin-top: 10vh;
+
+  h1 {
+    font-size: 3em;
+  }
+
+  p {
+    white-space: pre-wrap;
+    font-size: 1.2em;
+  }
 }
 
 #post-info {
@@ -15,21 +24,33 @@
   gap: 10px;
 }
 
-h1 {
-  font-size: 3em;
-}
-
-p {
-  white-space: pre-wrap;
-  font-size: 1.2em;
-}
-
 #comments {
   h2 {
     font-size: 30px;
+  }
+
+  #comments-wrapper {
+    padding: 10px;
   }
 }
 
 hr {
   color: black;
+}
+
+#comment {
+  display: flex;
+  flex-direction: rows;
+  align-items: center;
+  gap: 2rem;
+  justify-content: space-between;
+
+  :first-child {
+    width: 100%;
+  }
+
+  #comment_text {
+    display: flex;
+    flex-grow: 1;
+  }
 }

@@ -15,10 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 class ProfilController extends AbstractController
 {
 
-
-    public function __construct(private EntityManager $mgr, private PostRepository $postRepository)
-    {
-    }
+    public function __construct(private EntityManager $mgr, private PostRepository $postRepository) {}
+    
     #[Route(path: "/profil", name: "profil_perso", methods: ["GET"])]
     public function baseProfil(): Response
     {
@@ -29,6 +27,7 @@ class ProfilController extends AbstractController
         }
         return $this->redirectToRoute('profil_show', ['id' => $this->getUser()->getId()]);
     }
+
     #[Route('/profil/{id}', name: 'profil_show', requirements: ['page' => '\d+'])]
     public function profil(int $id): Response
     {
@@ -45,7 +44,6 @@ class ProfilController extends AbstractController
             'connected' => $connected
         ]);
     }
-
 
     #[Route('/profil/post/follow', name: 'profil_post_follow')]
     public function postProfilfollow(): Response
@@ -170,6 +168,4 @@ class ProfilController extends AbstractController
 
         return $this->redirectToRoute('app_login');
     }
-
-
 }
