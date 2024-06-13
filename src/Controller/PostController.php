@@ -79,9 +79,11 @@ class PostController extends AbstractController
     public function removePost(int $id): Response
     {
         $post = $this->em->getRepository(Post::class)->find($id);
-        $this->em->remove($post);
-        $this->em->flush();
-
+        if($post->getProfil()->getId() === $this->getUser()->getId())
+        {
+            $this->em->remove($post);
+            $this->em->flush();
+        }
         return new Response();
     }
 }
