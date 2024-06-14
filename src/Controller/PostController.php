@@ -11,7 +11,6 @@ use App\Entity\Post;
 use App\Form\Type\PostType;
 use App\Form\CommentType;
 use App\Form\Type\SimpleSearchType;
-use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
@@ -99,6 +98,13 @@ class PostController extends AbstractController
 
         $post = $this->em->getRepository(Post::class)->find($id);
         $form = $this->createForm(PostType::class, $post);
+
+        if ($this->getUser() !== $post->getProfil())
+        {
+            return $this->redirectToRoute('display_post', [
+                'id' => $id
+            ]);
+        }
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
