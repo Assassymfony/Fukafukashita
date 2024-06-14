@@ -11,6 +11,7 @@ use App\Entity\Post;
 use App\Form\Type\PostType;
 use App\Form\CommentType;
 use App\Form\Type\SimpleSearchType;
+use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
@@ -42,6 +43,8 @@ class PostController extends AbstractController
         $comment = new Commentary();
         $commentForm = $this->createForm(CommentType::class, $comment);
 
+        $owner = $this->getUser() === $post->getProfil();
+
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $user = $this->getUser();
@@ -58,6 +61,7 @@ class PostController extends AbstractController
         return $this->render('post/post.html.twig', [
             'post' => $post,
             'commentForm' => $commentForm,
+            'owner' => $owner
         ]);
     }
 
@@ -88,7 +92,35 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/post/{id}', name: 'remove_post', methods: ['DELETE'])]
+    #[Route('/post/{id}/update', name: 'update_post', methods: ['GET', 'POST'])]
+    public function updatePost(int $id, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+
+        $post = $this->em->getRepository(Post::class)->find($id);
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$dateNow = new DateTime();
+            
+            $form = $form->getData();
+            $user = $this->getUser();
+            $post->setProfil($user);
+
+            $this->em->persist($post);
+            $this->em->flush();
+
+            return $this->redirectToRoute('display_post', ['id' => $post->getId()]);
+        }
+
+        return $this->render('post/new.html.twig', [
+            'form' => $form,
+            'title' => "Update your dream"
+        ]);
+    }    
+
+    #[Route('/post/{id}/delete', name: 'remove_post', methods: ['GET'])]
     public function removePost(int $id): Response
     {
         $post = $this->em->getRepository(Post::class)->find($id);
@@ -96,8 +128,13 @@ class PostController extends AbstractController
         {
             $this->em->remove($post);
             $this->em->flush();
+
+        return $this->redirectToRoute('all_posts');
         }
-        return new Response();
+
+        return $this->redirectToRoute('display_post', [
+                'id' => $post->getId()
+        ]);
     }
 
     #[Route('/post/{id}/comment', name: 'post_comment', methods: ['POST'])]

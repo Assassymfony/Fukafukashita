@@ -6,13 +6,14 @@
 <link rel="stylesheet" href="{{ asset('css/components/post.css') }}">
 {% endblock %}
 
+
 {% block title %}New post{% endblock %}
 
 {% form_theme form 'form/theme.html.twig' %}
 
 {% block body %}
 <div id="post-wrapper">
-  <h1>Post your dream</h1>
+  <h1>{{ title|default('Post your dream') }}</h1>
 
   <div class="form-container">
     {{ form(form) }}

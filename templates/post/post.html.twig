@@ -23,6 +23,20 @@
       {# <span>- {{ post.dateCreated }}</span> #}
       <span>-</span>
       <span>{{ post.createdAt|date('l, F j, Y') }}</span>
+
+      {% if owner %}
+      <a href="{{ path('update_post', { 'id': post.id} )}}">
+        <div class="icon {{ nightmare|default('') }}">
+          {{ ux_icon('solar:pen-bold') }}
+        </div>
+      </a>
+      
+      <a href="{{ path('remove_post', { 'id': post.id} )}}">
+        <div class="icon {{ nightmare|default('') }}">
+          {{ ux_icon('iconamoon:trash') }}
+        </div>
+      </a>
+      {% endif %}
     </div>
 
     <h1 id="post-title">{{ post.title }}</h1>
