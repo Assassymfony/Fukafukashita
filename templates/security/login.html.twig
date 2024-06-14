@@ -3,53 +3,13 @@
 {% block title %}Log in!{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-    <style>
-        
-        .form-container {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .form-container h1 {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-container .btn {
-            margin-top: 1rem;
-            width: 100%;
-            padding: 0.5rem;
-            border: none;
-            background-color: #007bff;
-            color: #ffffff;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .form-container .btn:hover {
-            background-color: #0056b3;
-        }
-
-        .form-container a {
-            display: block;
-            margin-top: 1rem;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .form-container a:hover {
-            text-decoration: underline;
-        }
-    </style>
+<link rel="stylesheet" href="{{ asset('css/components/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/components/login.css') }}">
 {% endblock %}
 
 {% block body %}
     <div class="form-container">
+        <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
         <form method="post">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -60,27 +20,21 @@
                     You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
                 </div>
             {% endif %}
-
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <label for="username">Name</label>
-            <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-            <label for="password">Password</label>
-            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-            {#
-                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                See https://symfony.com/doc/current/security/remember_me.html
-
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" name="_remember_me"> Remember me
-                    </label>
+            <div id="loginForm">
+                <div class="form-group">
+                    <label for="username">Name</label>
+                    <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
                 </div>
-            #}
 
-            <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                </div>
+                <div>
+                    <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+                </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            </div>
         </form>
 
         <a href="/register">Or Register</a>
