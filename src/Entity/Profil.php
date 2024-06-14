@@ -34,13 +34,13 @@ class Profil implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Post>
      */
-    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'profil')]
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'profil', cascade: ['remove'])]
     private Collection $posts;
 
     /**
      * @var Collection<int, Commentary>
      */
-    #[ORM\OneToMany(targetEntity: Commentary::class, mappedBy: 'profil')]
+    #[ORM\OneToMany(targetEntity: Commentary::class, mappedBy: 'profil', cascade: ['remove'])]
     private Collection $commentaries;
 
     /**

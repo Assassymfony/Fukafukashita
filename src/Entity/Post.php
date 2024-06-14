@@ -40,7 +40,7 @@ class Post
     /**
      * @var Collection<int, Commentary>
      */
-    #[ORM\OneToMany(targetEntity: Commentary::class, mappedBy: 'post')]
+    #[ORM\OneToMany(targetEntity: Commentary::class, mappedBy: 'post', cascade: ['persist', 'remove'])]
     private Collection $commentaries;
 
     /**
